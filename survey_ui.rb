@@ -68,28 +68,19 @@ def add_question
   current_survey.questions << new_question
 end
 
+
 def add_answers
   view_questions
   puts "\nChoose a question # to add answers to\n"
   question_choice = gets.chomp.to_i
   current_question = Question.find(question_choice)
-  print "\nFirst answer:\n"
-  answer1 = gets.chomp
-  answera = Answer.create({name: answer1})
-  print "\nSecond answer:\n"
-  answer2 = gets.chomp
-  answerb = Answer.create({name: answer2})
-  print "\nThird answer:\n"
-  answer3 = gets.chomp
-  answerc = Answer.create({name: answer3})
-  print "\nFourth answer:\n"
-  answer4 = gets.chomp
-  answerd = Answer.create({name: answer1})
-  current_question.answers << answera
-  current_question.answers << answerb
-  current_question.answers << answerc
-  current_question.answers << answerd
-  binding.pry
+  4.times do
+    puts "Enter answer: "
+    answer_input = gets.chomp
+    answer = Answer.create({name: answer_input})
+    current_question.answers << answer
+  end
 end
+
 
 main_menu
