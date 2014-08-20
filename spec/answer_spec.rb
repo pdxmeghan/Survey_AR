@@ -1,5 +1,6 @@
 require 'spec_helper'
 
-  describe Answer do
-    it {should have_and_belong_to_many :questions}
-  end
+describe Answer do
+  it { should have_many(:questions).through(:choices) }
+
+end

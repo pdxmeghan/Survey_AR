@@ -3,6 +3,8 @@ require 'rspec'
 require 'survey'
 require 'question'
 require 'answer'
+require 'choice'
+require 'response'
 require 'shoulda-matchers'
 
 ActiveRecord::Base.establish_connection(YAML::load(File.open('./db/config.yml'))['test'])
