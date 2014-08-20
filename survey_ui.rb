@@ -10,23 +10,26 @@ ActiveRecord::Base.establish_connection(development_configuration)
 
 def main_menu
   loop do
-    puts "Press 's' to create a new survey"
-    puts "Press 'v' to view all surveys"
-    puts "Press 'a' to add questions to a survey"
-    puts "Press 'q' to view all questions"
-    puts "Press 'w' to add answers to a question"
+    puts "Press '1' to create a new survey"
+    puts "Press '2' to view all surveys"
+    puts "Press '3' to add questions to a survey"
+    puts "Press '4' to view all questions"
+    puts "Press '5' to add answers to a question"
+    puts "[6] - Take a survey"
     puts "Press 'x' to exit"
     menu_choice = gets.chomp
-    if menu_choice == 's'
+    if menu_choice == '1'
       create_survey
-    elsif menu_choice == 'a'
+    elsif menu_choice == '3'
       add_question
-    elsif menu_choice == 'q'
+    elsif menu_choice == '4'
       view_questions
-    elsif menu_choice == 'v'
+    elsif menu_choice == '2'
       view_surveys
-    elsif menu_choice == 'w'
+    elsif menu_choice == '5'
       add_answers
+    elsif menu_choice == '6'
+      take_survey
     elsif menu_choice == 'x'
       puts "Goodbye!"
       exit
@@ -79,6 +82,21 @@ def add_answers
     answer_input = gets.chomp
     answer = Answer.create({name: answer_input})
     current_question.answers << answer
+  end
+end
+
+def take_survey
+  view_surveys
+  puts "\nWhat # survey would you like to take?\n"
+  survey_choice = gets.chomp.to_i
+  current_survey = Survey.find(survey_choice)
+  current_survey.questions.each do |question|
+    puts question.name
+    question.answers.each do |answer|
+      puts "*#{answer.id}* - #{answer.name}"
+    end
+    puts "\nInput the *number* of your choice.\n"
+    answer_input = gets.chomp
   end
 end
 
