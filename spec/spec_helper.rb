@@ -1,10 +1,11 @@
-require 'activerecord'
+require 'active_record'
 require 'rspec'
 require 'survey'
 require 'question'
 require 'answer'
+require 'shoulda-matchers'
 
-ActiveRecord::Base.establish_connection(YAML::loan(File.open('./db/config.yml'))['test'])
+ActiveRecord::Base.establish_connection(YAML::load(File.open('./db/config.yml'))['test'])
 
 RSpec.configure do |config|
   config.after(:each) do
