@@ -13,14 +13,20 @@ def main_menu
     puts "Press 's' to create a new survey"
     puts "Press 'v' to view all surveys"
     puts "Press 'a' to add questions to a survey"
+    puts "Press 'q' to view all questions"
+    puts "Press 'w' to add answers to a question"
     puts "Press 'x' to exit"
     menu_choice = gets.chomp
     if menu_choice == 's'
       create_survey
     elsif menu_choice == 'a'
       add_question
+    elsif menu_choice == 'q'
+      view_questions
     elsif menu_choice == 'v'
       view_surveys
+    elsif menu_choice == 'w'
+      add_answers
     elsif menu_choice == 'x'
       puts "Goodbye!"
       exit
@@ -44,15 +50,46 @@ def view_surveys
   end
 end
 
+def view_questions
+  puts "\nHere are all the questions that have been created:\n"
+  Question.all.each do |question|
+    puts "(#{question.id}) -- #{question.name}"
+  end
+end
+
 def add_question
   view_surveys
   puts "Choose survey # to add question to"
   survey_choice = gets.chomp.to_i
   current_survey = Survey.find(survey_choice)
-  puts "What is the first question on your survey?"
+  puts "What is the question for your survey?"
   question = gets.chomp
   new_question = Question.create({name: question})
   current_survey.questions << new_question
+end
+
+def add_answers
+  view_questions
+  puts "\nChoose a question # to add answers to\n"
+  question_choice = gets.chomp.to_i
+  current_question = Question.find(question_choice)
+  print "\nFirst answer:\n"
+  answer1 = gets.chomp
+  answera = Answer.create({name: answer1})
+  print "\nSecond answer:\n"
+  answer2 = gets.chomp
+  answerb = Answer.create({name: answer2})
+  print "\nThird answer:\n"
+  answer3 = gets.chomp
+  answerc = Answer.create({name: answer3})
+  print "\nFourth answer:\n"
+  answer4 = gets.chomp
+  answerd = Answer.create({name: answer1})
+  current_question.answers << answera
+  current_question.answers << answerb
+  current_question.answers << answerc
+  current_question.answers << answerd
+  binding.pry
 end
 
 main_menu
